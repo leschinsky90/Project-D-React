@@ -1,0 +1,71 @@
+.container,
+.headquaters {
+  width: 32px;
+  height: 32px;
+}
+.void,
+.brick,
+.bush,
+.concrete,
+.ice,
+.water {
+  width: 16px;
+  height: 16px;
+}
+.container {
+  background-color: transparent;
+  display: flex;
+  flex-wrap: wrap;
+}
+.brick {
+  background: url(/src/assets/sprites/Objects/brick.png);
+}
+.bush {
+  background: url(/src/assets/sprites/Objects/bush.png);
+  z-index: 3;
+}
+.concrete {
+  background: url(/src/assets/sprites/Objects/concrete.png);
+}
+.ice {
+  background: url(/src/assets/sprites/Objects/ice.png);
+}
+.water {
+  background-image: url(/src/assets/sprites/Objects/water.png);
+  background-position: left;
+  animation-name: waterAnimation;
+  animation-duration: 1000ms;
+  animation-iteration-count: infinite;
+}
+
+@keyframes waterAnimation {
+  0% {
+    background-position: left;
+  }
+  50% {
+    background-position: left;
+  }
+  51% {
+    background-position: right;
+  }
+  100% {
+    background-position: right;
+  }
+}
+
+.headquaters {
+  background-image: url(/src/assets/sprites/Objects/Headquaters/entire.png);
+  bottom: 32px;
+  left: 16px;
+  position: relative;
+}
+.headquatersContainer {
+  display: flex;
+  width: 64px;
+  height: 48px;
+  flex-wrap: wrap;
+  bottom: 48px;
+  left: 224px;
+  position: relative;
+  z-index: 1;
+}

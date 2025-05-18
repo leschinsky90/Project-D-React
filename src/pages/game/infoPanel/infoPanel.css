@@ -1,0 +1,33 @@
+.infoPanel {
+  position: relative;
+  left: 32px;
+  width: 64px;
+  height: 512px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.enemyIcon {
+  background-image: url(../../../assets/sprites/enemyicon.png);
+  width: 16px;
+  height: 16px;
+  background-size: 16px 16px;
+}
+.enemiesCountComponent {
+  width: 32px;
+  height: 160px;
+  display: flex;
+  justify-content: start;
+  flex-wrap: wrap;
+}
+.lifesCountComponent,
+.stageNumberComponent {
+  display: flex;
+  flex-direction: column;
+
+  font-weight: 900;
+  font-size: 1.6rem;
+  text-align: center;
+  color: black;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

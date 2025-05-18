@@ -1,0 +1,40 @@
+.menu {
+  display: flex;
+  flex-direction: column;
+}
+.title {
+  width: 336px;
+  height: 136px;
+  background-image: url(/title.png);
+  background-size: 336px 136px;
+  margin-bottom: 20px;
+}
+.choiceContainer {
+  display: flex;
+  flex-direction: column;
+  left: 64px;
+  position: relative;
+}
+.choice {
+  color: white;
+  font-weight: 800;
+  font-size: 2rem;
+  cursor: pointer;
+  text-align: left;
+}
+.tankCursor1 {
+  width: 32px;
+  height: 32px;
+  background-image: url(../../assets/sprites/Tanks/Player/lvl0/right1.png);
+  position: absolute;
+  left: -64px;
+  top: 8px;
+}
+.tankCursor2 {
+  width: 32px;
+  height: 32px;
+  background-image: url(../../assets/sprites/Tanks/Player/lvl0/right1.png);
+  position: absolute;
+  left: -64px;
+  top: 58px;
+}

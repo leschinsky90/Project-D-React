@@ -1,0 +1,23 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+.gameSpace {
+  width: 824px;
+  height: 600px;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: -2;
+  user-select: none;
+}
+.levelChangeButton {
+  width: 75px;
+  height: 40px;
+  position: relative;
+  top: 0;
+  margin: 0 5px 0 5px;
+}
