@@ -9,7 +9,7 @@ import store from "./store/store.ts";
 createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
     <StrictMode>
-      <BrowserRouter>
+      <BrowserRouter basename="Project-D-React">
         <App />
       </BrowserRouter>
     </StrictMode>
