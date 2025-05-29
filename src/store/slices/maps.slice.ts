@@ -1,12 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import mapsArray from "../../assets/levelAssets/mapsArray";
-import { MapType } from "../../types";
+import { convertMapsArray } from "../../assets/levelAssets/mapsArray";
+import { ConvertMapType } from "../../types";
+
+const convertMaps = convertMapsArray();
 
 export const mapsSlice = createSlice({
   name: "maps",
-  initialState: mapsArray,
+  initialState: convertMaps,
   reducers: {
-    addMap(state, action: PayloadAction<MapType>) {
+    addMap(state, action: PayloadAction<ConvertMapType>) {
       state.unshift(action.payload);
     },
   },

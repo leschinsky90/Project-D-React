@@ -1,4 +1,3 @@
-.container,
 .headquaters {
   width: 32px;
   height: 32px;
@@ -11,11 +10,6 @@
 .water {
   width: 16px;
   height: 16px;
-}
-.container {
-  background-color: transparent;
-  display: flex;
-  flex-wrap: wrap;
 }
 .brick {
   background: url(/src/assets/sprites/Objects/brick.png);

@@ -1,4 +1,5 @@
-import { MapType } from "../../types";
+import { ConvertMapType, MapType } from "../../types";
+import createConvertMap from "./convertMapTemplate";
 
 const mapsArray: MapType[] = [
   [
@@ -201,6 +202,25 @@ export const createLevel = (): MapType => {
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   ];
+};
+
+export const convertMapsArray = (): ConvertMapType[] => {
+  const convertMaps: ConvertMapType[] = [];
+
+  mapsArray.forEach((item) => {
+    const newMap = createConvertMap();
+    for (let y = 0; y < 16; y++) {
+      for (let x = 0; x < 16; x++) {
+        const el = item[y][x];
+        newMap[y * 2][x * 2] = el;
+        newMap[y * 2 + 1][x * 2] = el;
+        newMap[y * 2][x * 2 + 1] = el;
+        newMap[y * 2 + 1][x * 2 + 1] = el;
+      }
+    }
+    convertMaps.push(newMap);
+  });
+  return convertMaps;
 };
 
 export default mapsArray;

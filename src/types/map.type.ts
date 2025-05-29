@@ -1,5 +1,76 @@
 export type mapObject = 0 | 1 | 2 | 3 | 4 | 5;
 type M = mapObject;
+
 type mapRow = [M, M, M, M, M, M, M, M, M, M, M, M, M, M, M, M];
 type R = mapRow;
 export type MapType = [R, R, R, R, R, R, R, R, R, R, R, R, R, R, R, R];
+
+type convertMapRow = [
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M,
+  M
+];
+type CR = convertMapRow;
+export type ConvertMapType = [
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR,
+  CR
+];

@@ -7,6 +7,7 @@ import "./game.page.css";
 import {
   createBullet,
   playerMove,
+  playerTurn,
 } from "../../store/slices/playerParams.slice";
 import { IMovementDirections } from "../../types/movementDirections.type";
 
@@ -18,20 +19,34 @@ export const GamePage = () => {
 
   const mapArr = useAppSelector((state) => state.mapsReducer);
   const [levelSelected, setLevelSelected] = useState<boolean>(false);
+  const playerTankPosition = useAppSelector(
+    (state) => state.playerParamsReducer.tank.position
+  );
   const handleOnKeyDown = (event: KeyboardEvent) => {
-    const k = event.key.toLowerCase();
+    const k = event.code.toLowerCase();
     if (levelSelected) {
       const movementDirections: IMovementDirections = {
-        w: "up",
+        keyw: "up",
         arrowup: "up",
-        s: "down",
+        keys: "down",
         arrowdown: "down",
-        a: "left",
+        keya: "left",
         arrowleft: "left",
-        d: "right",
+        keyd: "right",
         arrowright: "right",
       };
-      dispatch(playerMove(movementDirections[k]));
+      const dir = movementDirections[k];
+      if (dir) {
+        if (playerTankPosition == dir)
+          dispatch(
+            playerMove({
+              move: dir,
+              map: mapArr[selectedLevel - 1],
+            })
+          );
+        else dispatch(playerTurn(dir));
+      }
+
       if (k == "space") {
         dispatch(createBullet());
       }

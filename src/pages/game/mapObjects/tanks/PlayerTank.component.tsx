@@ -3,18 +3,17 @@ import "./tanks.css";
 
 export const PlayerTankComponent = () => {
   /* const dispatch = useAppDispatch(); */
-  const playerParams = useAppSelector(
-    (state) => state.playerParamsReducer.tank
-  );
-  console.log(playerParams.alive);
+  const playerParams = useAppSelector((state) => state.playerParamsReducer);
+  const playerTankParams = playerParams.tank;
 
   return (
     <>
       <div
         className="playerTank"
         style={{
-          top: `${-512 + playerParams.y * 8}px`,
-          left: `${-64 + playerParams.x * 8}px`,
+          top: `${-512 + playerTankParams.y * 16}px`,
+          left: `${-64 + playerTankParams.x * 16}px`,
+          backgroundImage: `url(src/assets/sprites/Tanks/Player/lvl${playerParams.lvl}/${playerTankParams.position}1.png)`,
         }}
       />
     </>

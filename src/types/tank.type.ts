@@ -3,6 +3,6 @@ export interface ITank {
   x: number;
   y: number;
   position: string;
-  speed: 4 | 8;
+  speed: 1 | 2;
   alive: boolean;
 }

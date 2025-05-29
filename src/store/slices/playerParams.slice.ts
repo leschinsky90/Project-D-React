@@ -1,7 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { playerInitial } from "../../assets/playerInitial";
-import { IBullet } from "../../types";
+import { ConvertMapType, IBullet } from "../../types";
+import playerCanMove from "../../services/playerCanMove";
+
 type Move = "up" | "down" | "left" | "right";
+
+interface PlayerMovePayload {
+  move: Move;
+  map: ConvertMapType;
+}
 
 export const playerParamsSlice = createSlice({
   name: "player",
@@ -19,36 +26,54 @@ export const playerParamsSlice = createSlice({
     takeLife(state) {
       state.lifes--;
     },
-    playerMove(state, action: PayloadAction<Move>) {
-      switch (action.payload) {
-        case "up":
-          if (state.tank.y > 0) state.tank.y--;
-          break;
-        case "down":
-          if (state.tank.y < 60) state.tank.y++;
-          break;
-        case "left":
-          if (state.tank.x > 0) state.tank.x--;
-          break;
-        case "right":
-          if (state.tank.x < 60) state.tank.x++;
-          break;
-        default:
-          break;
+    playerMove(state, action: PayloadAction<PlayerMovePayload>) {
+      const { move, map } = action.payload;
+      const isCanMove = playerCanMove(map, state, move);
+      if (isCanMove) {
+        switch (move) {
+          case "up": {
+            state.tank.y -= 0.5;
+            break;
+          }
+          case "down": {
+            state.tank.y += 0.5;
+            break;
+          }
+          case "left": {
+            state.tank.x -= 0.5;
+            break;
+          }
+          case "right": {
+            state.tank.x += 0.5;
+            break;
+          }
+          default:
+            break;
+        }
       }
+    },
+    playerTurn(state, action: PayloadAction<Move>) {
+      state.tank.position = action.payload;
     },
     createBullet(state) {
       const bullet: IBullet = {
         type: "player",
         speed: 1,
-        x: state.tank.x + 4,
-        y: state.tank.y + 4,
+        x: state.tank.x + 1,
+        y: state.tank.y + 1,
       };
       state.bullets.push(bullet);
     },
   },
 });
 
-export const { appearPlayer, kickPlayer, addLife, takeLife, playerMove , createBullet} =
-  playerParamsSlice.actions;
+export const {
+  appearPlayer,
+  kickPlayer,
+  addLife,
+  takeLife,
+  playerMove,
+  playerTurn,
+  createBullet,
+} = playerParamsSlice.actions;
 export default playerParamsSlice.reducer;
