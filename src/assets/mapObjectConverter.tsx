@@ -3,16 +3,18 @@ import {
   BushComponent,
   ConcreteComponent,
   WaterComponent,
-} from "../pages/game/mapObjects";
-import { IceComponent } from "../pages/game/mapObjects/Ice.component";
+  IceComponent,
+} from "../components/mapObjects";
 
-const mapObjectConvert = {
-  1: <BrickComponent />,
-  2: <ConcreteComponent />,
-  3: <WaterComponent />,
-  4: <BushComponent />,
-  5: <IceComponent />,
-  0: <div className="void"></div>,
+const getMapObjectConvert = (type: number) => {
+  return {
+    1: <BrickComponent />,
+    2: <ConcreteComponent />,
+    3: <WaterComponent />,
+    4: <BushComponent />,
+    5: <IceComponent />,
+    0: <div className="void"></div>,
+  }[type];
 };
 
-export default mapObjectConvert;
+export default getMapObjectConvert;

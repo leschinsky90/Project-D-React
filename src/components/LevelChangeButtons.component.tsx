@@ -1,9 +1,9 @@
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { nextLevel, prevLevel } from "../store/slices/gameParams.slice";
+import { nextLevel, prevLevel } from "../store/slices/game.slice";
 
 export const LevelChangeButtonsComponent = () => {
   const debugMode = useAppSelector(
-    (state) => state.gameParamsReducer.debugMode
+    (state) => state.gameReducer.gameState.debugMode
   );
   const dispatch = useAppDispatch();
   const handleOnPreviosLevelButtonClick = () => {

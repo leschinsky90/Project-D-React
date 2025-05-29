@@ -1,9 +1,10 @@
 import { IBullet } from "./bullet.type";
+import { Directions } from "./movementDirections.type";
 import { ITank } from "./tank.type";
 
 export interface IEnemy {
   tank: ITank | null;
-  vector: 1 | 2 | 3 | 4;
+  directions: Directions;
   index: number | null;
   flashing: boolean;
   moveInterval: number | null;

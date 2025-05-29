@@ -2,25 +2,26 @@ import { useEffect, useState } from "react";
 import { GameFieldComponent } from "./GameField.component";
 import { InfoPanelComponent } from "./infoPanel";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { nextLevel, prevLevel } from "../../store/slices/gameParams.slice";
 import "./game.page.css";
+import { IMovementDirections } from "../../types";
 import {
-  createBullet,
+  createPlayerBullet,
+  nextLevel,
   playerMove,
   playerTurn,
-} from "../../store/slices/playerParams.slice";
-import { IMovementDirections } from "../../types/movementDirections.type";
+  prevLevel,
+} from "../../store/slices/game.slice";
 
 export const GamePage = () => {
   const dispatch = useAppDispatch();
   const selectedLevel = useAppSelector(
-    (state) => state.gameParamsReducer.selectedLevel
+    (state) => state.gameReducer.gameState.selectedLevel
   );
 
-  const mapArr = useAppSelector((state) => state.mapsReducer);
+  const mapArr = useAppSelector((state) => state.gameReducer.maps);
   const [levelSelected, setLevelSelected] = useState<boolean>(false);
-  const playerTankPosition = useAppSelector(
-    (state) => state.playerParamsReducer.tank.position
+  const playerTankDirection = useAppSelector(
+    (state) => state.gameReducer.player.tank.direction
   );
   const handleOnKeyDown = (event: KeyboardEvent) => {
     const k = event.code.toLowerCase();
@@ -37,18 +38,13 @@ export const GamePage = () => {
       };
       const dir = movementDirections[k];
       if (dir) {
-        if (playerTankPosition == dir)
-          dispatch(
-            playerMove({
-              move: dir,
-              map: mapArr[selectedLevel - 1],
-            })
-          );
-        else dispatch(playerTurn(dir));
+        if (playerTankDirection == dir) {
+          dispatch(playerMove());
+        } else dispatch(playerTurn(dir));
       }
 
       if (k == "space") {
-        dispatch(createBullet());
+        dispatch(createPlayerBullet());
       }
     } else {
       if (k == "enter") setLevelSelected(true);

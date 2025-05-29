@@ -1,16 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import playerParamsReducer from "./slices/playerParams.slice";
-import gameParamsReducer from "./slices/gameParams.slice";
-import mapsReducer from "./slices/maps.slice";
-import enemiesReducer from "./slices/enemies.slice";
+import gameReducer from "./slices/game.slice";
 
 export const store = configureStore({
   reducer: {
-    playerParamsReducer,
-    gameParamsReducer,
-    mapsReducer,
-    enemiesReducer,
+    gameReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

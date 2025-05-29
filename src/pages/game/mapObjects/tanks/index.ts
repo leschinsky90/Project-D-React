@@ -1,1 +1,0 @@
-export * from "./PlayerTank.component"

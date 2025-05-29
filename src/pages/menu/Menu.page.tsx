@@ -9,13 +9,14 @@ export const MenuPage = () => {
   const navigate = useNavigate();
   const [cursorState, setCursorState] = useState<number>(1);
   const handleOnKeyDown = (event: KeyboardEvent) => {
-    if (event.key == "ArrowDown" || event.key == "S") {
+    const k = event.code.toLocaleLowerCase();
+    if (k == "arrowdown" || k == "keys") {
       setCursorState((cursorState % 2) + 1);
     }
-    if (event.key == "ArrowUp" || event.key == "W") {
+    if (k == "arrowup" || k == "w") {
       if (cursorState == 1) setCursorState(2);
       else if (cursorState == 2) setCursorState(1);
-    } else if (event.key == "Enter" || event.key == "Space") {
+    } else if (k == "enter" || k == "space") {
       if (cursorState == 1) navigate("/game");
       else if (cursorState == 2) navigate("/constructor");
     }

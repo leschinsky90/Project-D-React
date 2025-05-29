@@ -1,4 +1,4 @@
-import { IBullet } from "../../../../types";
+import { IBullet } from "../../../types";
 import "./tanks.css";
 export const BulletComponent = (bullet: IBullet) => {
   return (
