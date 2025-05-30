@@ -111,6 +111,18 @@ export const gameSlice = createSlice({
         (bullet) => bullet.id != action.payload
       );
     },
+    updateBulletPosition: (
+      state,
+      action: PayloadAction<{ id: number; x: number; y: number }>
+    ) => {
+      const bullet = state.bullets.find(
+        (bullet) => bullet.id === action.payload.id
+      );
+      if (bullet) {
+        bullet.x = action.payload.x;
+        bullet.y = action.payload.y;
+      }
+    },
   },
 });
 
@@ -127,5 +139,7 @@ export const {
   playerMove,
   playerTurn,
   createPlayerBullet,
+  removeBullet,
+  updateBulletPosition,
 } = gameSlice.actions;
 export default gameSlice.reducer;

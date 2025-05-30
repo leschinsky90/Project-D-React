@@ -11,18 +11,22 @@ import {
   playerTurn,
   prevLevel,
 } from "../../store/slices/game.slice";
+import { useBullets } from "../../hooks/useBullets";
 
 export const GamePage = () => {
   const dispatch = useAppDispatch();
-  const selectedLevel = useAppSelector(
-    (state) => state.gameReducer.gameState.selectedLevel
-  );
-
-  const mapArr = useAppSelector((state) => state.gameReducer.maps);
   const [levelSelected, setLevelSelected] = useState<boolean>(false);
+
+  const { selectedLevel } = useAppSelector(
+    (state) => state.gameReducer.gameState
+  );
+  const mapArr = useAppSelector((state) => state.gameReducer.maps);
   const playerTankDirection = useAppSelector(
     (state) => state.gameReducer.player.tank.direction
   );
+
+  useBullets();
+
   const handleOnKeyDown = (event: KeyboardEvent) => {
     const k = event.code.toLowerCase();
     if (levelSelected) {
@@ -42,7 +46,6 @@ export const GamePage = () => {
           dispatch(playerMove());
         } else dispatch(playerTurn(dir));
       }
-
       if (k == "space") {
         dispatch(createPlayerBullet());
       }
