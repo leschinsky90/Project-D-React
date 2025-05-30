@@ -1,7 +1,7 @@
 import { IArmoredEnemy, IEnemy } from "../types/enemies.type";
 
 export const OrdinaryEnemyInitial: IEnemy = {
-  vector: 1,
+  directions: "down",
   index: null,
   flashing: false,
   moveInterval: null,
@@ -12,7 +12,7 @@ export const OrdinaryEnemyInitial: IEnemy = {
 };
 
 export const FastEnemyInitial: IEnemy = {
-  vector: 1,
+  directions: "down",
   index: null,
   flashing: false,
   moveInterval: null,
@@ -23,7 +23,7 @@ export const FastEnemyInitial: IEnemy = {
 };
 
 export const RapidFireEnemyInitial: IEnemy = {
-  vector: 1,
+  directions: "down",
   index: null,
   flashing: false,
   moveInterval: null,
@@ -34,7 +34,7 @@ export const RapidFireEnemyInitial: IEnemy = {
 };
 
 export const ArmoredEnemyInitial: IArmoredEnemy = {
-  vector: 1,
+  directions: "down",
   index: null,
   flashing: false,
   moveInterval: null,
