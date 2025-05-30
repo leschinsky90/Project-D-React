@@ -13,7 +13,7 @@ export const PlayerTankComponent = () => {
         style={{
           top: `${-512 + playerTankParams.y * 16}px`,
           left: `${-64 + playerTankParams.x * 16}px`,
-          backgroundImage: `url(src/assets/sprites/Tanks/Player/lvl${playerParams.lvl}/${playerTankParams.direction}1.png)`,
+          backgroundImage: `url(/sprites/Tanks/Player/lvl${playerParams.lvl}/${playerTankParams.direction}1.png)`,
         }}
       />
     </>

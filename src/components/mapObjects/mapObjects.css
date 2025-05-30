@@ -12,20 +12,20 @@
   height: 16px;
 }
 .brick {
-  background: url(/src/assets/sprites/Objects/brick.png);
+  background: url(/sprites/Objects/brick.png);
 }
 .bush {
-  background: url(/src/assets/sprites/Objects/bush.png);
+  background: url(/sprites/Objects/bush.png);
   z-index: 3;
 }
 .concrete {
-  background: url(/src/assets/sprites/Objects/concrete.png);
+  background: url(/sprites/Objects/concrete.png);
 }
 .ice {
-  background: url(/src/assets/sprites/Objects/ice.png);
+  background: url(/sprites/Objects/ice.png);
 }
 .water {
-  background-image: url(/src/assets/sprites/Objects/water.png);
+  background-image: url(/sprites/Objects/water.png);
   background-position: left;
   animation-name: waterAnimation;
   animation-duration: 1000ms;
@@ -48,7 +48,7 @@
 }
 
 .headquaters {
-  background-image: url(/src/assets/sprites/Objects/Headquaters/entire.png);
+  background-image: url(/sprites/Objects/Headquaters/entire.png);
   bottom: 32px;
   left: 16px;
   position: relative;

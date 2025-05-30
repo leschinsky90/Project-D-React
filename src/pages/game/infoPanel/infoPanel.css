@@ -8,7 +8,7 @@
   justify-content: space-around;
 }
 .enemyIcon {
-  background-image: url(../../../assets/sprites/enemyicon.png);
+  background-image: url(/sprites/enemyicon.png);
   width: 16px;
   height: 16px;
   background-size: 16px 16px;

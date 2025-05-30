@@ -4,7 +4,7 @@
   position: relative;
   z-index: 2;
   background-size: 32px 32px;
-  background-image: url(/src/assets/sprites/Tanks/Player/lvl0/up1.png);
+  background-image: url(/sprites/Tanks/Player/lvl0/up1.png);
 }
 
 .bullet {
