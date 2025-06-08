@@ -5,8 +5,8 @@ export const BulletComponent = ({ bullet }: { bullet: IBullet }) => {
     <div
       className="bullet"
       style={{
-        top: `${bullet.y * 8}px`,
-        left: `${bullet.x * 8}px`,
+        top: `${-2 + bullet.y * 16}px`,
+        left: `${-2 + bullet.x * 16}px`,
       }}
     ></div>
   );

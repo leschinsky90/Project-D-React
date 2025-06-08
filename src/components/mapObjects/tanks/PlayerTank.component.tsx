@@ -1,14 +1,8 @@
-import { useAppSelector } from "../../../store/hooks";
+import { /* useAppDispatch, */ useAppSelector } from "../../../store/hooks";
 import "./tanks.css";
 
-const getTankSprite = (lvl: number, direction: string) => {
-  return new URL(
-    `/public/sprites/Tanks/Player/lvl${lvl}/${direction}1.png`,
-    import.meta.url
-  ).href;
-};
-
 export const PlayerTankComponent = () => {
+  /* const dispatch = useAppDispatch(); */
   const playerParams = useAppSelector((state) => state.gameReducer.player);
   const playerTankParams = playerParams.tank;
 
@@ -19,10 +13,7 @@ export const PlayerTankComponent = () => {
         style={{
           top: `${-512 + playerTankParams.y * 16}px`,
           left: `${-64 + playerTankParams.x * 16}px`,
-          backgroundImage: `url(${getTankSprite(
-            playerParams.lvl,
-            playerTankParams.direction
-          )})`,
+          backgroundImage: `url(sprites/Tanks/Player/lvl${playerParams.lvl}/${playerTankParams.direction}1.png)`,
         }}
       />
     </>

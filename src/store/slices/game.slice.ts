@@ -103,11 +103,20 @@ export const gameSlice = createSlice({
         direction: state.player.tank.direction,
         id: createBulletId(),
       };
-      state.bullets.push(bullet);
-      state.player.bullets.push(bullet);
+      if (state.player.lvl > 0) bullet.speed = 2;
+      if (
+        state.player.bullets.length == 0 ||
+        (state.player.lvl >= 2 && state.player.bullets.length == 1)
+      ) {
+        state.bullets.push(bullet);
+        state.player.bullets.push(bullet);
+      }
     },
-    removeBullet(state, action: PayloadAction<number>) {
+    bulletCollision(state, action: PayloadAction<number>) {
       state.bullets = state.bullets.filter(
+        (bullet) => bullet.id != action.payload
+      );
+      state.player.bullets = state.player.bullets.filter(
         (bullet) => bullet.id != action.payload
       );
     },
@@ -139,7 +148,7 @@ export const {
   playerMove,
   playerTurn,
   createPlayerBullet,
-  removeBullet,
+  bulletCollision,
   updateBulletPosition,
 } = gameSlice.actions;
 export default gameSlice.reducer;
