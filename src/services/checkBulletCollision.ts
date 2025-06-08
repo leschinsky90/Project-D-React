@@ -1,8 +1,8 @@
-import { /* ConvertMapType, */ IBullet } from "../types";
+import { ConvertMapType, IBullet } from "../types";
 
 const checkBulletCollision = (
-  /*   map: ConvertMapType,
-   */ bullet: IBullet
+  map: ConvertMapType,
+  bullet: IBullet
 ): boolean => {
   const { direction, x, y, speed } = bullet;
 
@@ -25,25 +25,32 @@ const checkBulletCollision = (
     potentPosition.y < 0 ||
     potentPosition.y > 32
   ) {
-    return false;
+    return true;
   }
 
-  /* const mapObjectInPotentPosition = {
+  const mapObjectInPotentPosition = {
     1: map[Math.trunc(potentPosition.y)][Math.trunc(potentPosition.x)],
-    2: map[Math.trunc(potentPosition.y)][Math.trunc(potentPosition.x + 1.5)],
-    3: map[Math.trunc(potentPosition.y + 1.5)][
-      Math.trunc(potentPosition.x + 1.5)
-    ],
-    4: map[Math.trunc(potentPosition.y + 1.5)][Math.trunc(potentPosition.x)],
+    2: map[Math.trunc(potentPosition.y)][Math.trunc(potentPosition.x)],
+    3: map[Math.trunc(potentPosition.y)][Math.trunc(potentPosition.x)],
+    4: map[Math.trunc(potentPosition.y)][Math.trunc(potentPosition.x)],
   };
 
-  return (
-    ![1, 2, 3].includes(mapObjectInPotentPosition[1]) &&
-    ![1, 2, 3].includes(mapObjectInPotentPosition[2]) &&
-    ![1, 2, 3].includes(mapObjectInPotentPosition[3]) &&
-    ![1, 2, 3].includes(mapObjectInPotentPosition[4])
-  ); */
-  return true;
+  if (
+    !(
+      ![1, 2].includes(mapObjectInPotentPosition[1]) &&
+      ![1, 2].includes(mapObjectInPotentPosition[2]) &&
+      ![1, 2].includes(mapObjectInPotentPosition[3]) &&
+      ![1, 2].includes(mapObjectInPotentPosition[4])
+    )
+  ) {
+    console.log(
+      5,
+      potentPosition,
+      map[Math.trunc(potentPosition.y)][Math.trunc(potentPosition.x)]
+    );
+    return true;
+  }
+  return false;
 };
 
 export default checkBulletCollision;

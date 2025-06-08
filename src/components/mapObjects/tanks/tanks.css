@@ -1,7 +1,7 @@
 .playerTank {
   width: 32px;
   height: 32px;
-  position: relative;
+  position: absolute;
   z-index: 2;
   background-size: 32px 32px;
   background-image: url(/sprites/Tanks/Player/lvl0/up1.png);

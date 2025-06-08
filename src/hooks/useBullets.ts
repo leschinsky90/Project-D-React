@@ -4,10 +4,16 @@ import {
   bulletCollision,
   updateBulletPosition,
 } from "../store/slices/game.slice";
+import checkBulletCollision from "../services/checkBulletCollision";
+import { ConvertMapType } from "../types";
 
 export const useBullets = () => {
   const dispatch = useAppDispatch();
   const bullets = useAppSelector((state) => state.gameReducer.bullets);
+  const currentMap: ConvertMapType = useAppSelector(
+    (state) =>
+      state.gameReducer.maps[state.gameReducer.gameState.selectedLevel - 1]
+  );
   const lastUpdateRef = useRef(0);
 
   useEffect(() => {
@@ -28,7 +34,7 @@ export const useBullets = () => {
           const newX = directions[direction].x;
           const newY = directions[direction].y;
 
-          if (newX < 0 || newX > 32 || newY < 0 || newY > 32) {
+          if (checkBulletCollision(currentMap, bullet)) {
             dispatch(bulletCollision(id));
           } else {
             dispatch(updateBulletPosition({ id, x: newX, y: newY }));
