@@ -96,7 +96,10 @@ export const GamePage = () => {
           <h1 className="levelSelectedTitle">STAGE: {selectedLevel}</h1>
           <button
             className="playLevelButton"
-            onClick={() => setLevelSelected(true)}
+            onClick={() => {
+              setLevelSelected(true);
+              dispatch(prevLevel());
+            }}
           >
             Play level
           </button>

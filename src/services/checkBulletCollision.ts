@@ -36,7 +36,13 @@ const checkBulletCollision = (
     map[Math.trunc(potentPosition.y)][Math.trunc(potentPosition.x)];
 
   if (mapObjectInPotentPosition === 1) {
-    dispatch(updateMap({ x: potentPosition.x, y: potentPosition.y, value: 0 }));
+    dispatch(
+      updateMap({
+        x: Math.trunc(potentPosition.x),
+        y: Math.trunc(potentPosition.y),
+        value: 0,
+      })
+    );
     return true;
   }
   if (mapObjectInPotentPosition === 2) {
