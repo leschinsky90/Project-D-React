@@ -13,6 +13,7 @@ export const GameSpaceComponent = ({ children }: IGameSpaceComponent) => {
       <div className="gameSpace">
         {children}
         <Outlet />
+        <span className="versionSpan">v. 0.15 beta</span>
       </div>
     </>
   );
