@@ -1,11 +1,15 @@
+import { Dispatch, ThunkDispatch, UnknownAction } from "@reduxjs/toolkit";
+import { updateMap } from "../store/slices/game.slice";
 import { ConvertMapType, IBullet } from "../types";
+import { IGame } from "../types/game.type";
 
 const checkBulletCollision = (
   map: ConvertMapType,
-  bullet: IBullet
+  bullet: IBullet,
+  dispatch: ThunkDispatch<{ gameReducer: IGame }, undefined, UnknownAction> &
+    Dispatch<UnknownAction>
 ): boolean => {
   const { direction, x, y, speed } = bullet;
-
   const directions = {
     up: { x: 0, y: -speed },
     down: { x: 0, y: speed },
@@ -28,19 +32,17 @@ const checkBulletCollision = (
     return true;
   }
 
-  const mapObjectInPotentPosition = {
-    1: map[Math.trunc(potentPosition.y)][Math.trunc(potentPosition.x)],
-    2: map[Math.trunc(potentPosition.y)][Math.trunc(potentPosition.x)],
-    3: map[Math.trunc(potentPosition.y)][Math.trunc(potentPosition.x)],
-    4: map[Math.trunc(potentPosition.y)][Math.trunc(potentPosition.x)],
-  };
+  const mapObjectInPotentPosition =
+    map[Math.trunc(potentPosition.y)][Math.trunc(potentPosition.x)];
 
-  return (
-    [1, 2].includes(mapObjectInPotentPosition[1]) ||
-    [1, 2].includes(mapObjectInPotentPosition[2]) ||
-    [1, 2].includes(mapObjectInPotentPosition[3]) ||
-    [1, 2].includes(mapObjectInPotentPosition[4])
-  );
+  if (mapObjectInPotentPosition === 1) {
+    dispatch(updateMap({ x: potentPosition.x, y: potentPosition.y, value: 0 }));
+    return true;
+  }
+  if (mapObjectInPotentPosition === 2) {
+    return true;
+  }
+  return false;
 };
 
 export default checkBulletCollision;

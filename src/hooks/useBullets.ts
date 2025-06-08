@@ -34,7 +34,7 @@ export const useBullets = () => {
           const newX = directions[direction].x;
           const newY = directions[direction].y;
 
-          if (checkBulletCollision(currentMap, bullet)) {
+          if (checkBulletCollision(currentMap, bullet, dispatch)) {
             dispatch(bulletCollision(id));
           } else {
             dispatch(updateBulletPosition({ id, x: newX, y: newY }));

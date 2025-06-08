@@ -3,7 +3,7 @@ import enemiesArray from "../../assets/levelAssets/enemiesArray";
 import mapsArray, {
   convertMapsArray,
 } from "../../assets/levelAssets/mapsArray";
-import { ConvertMapType, Directions, IBullet } from "../../types";
+import { ConvertMapType, Directions, IBullet, mapObject } from "../../types";
 import { playerInitial } from "../../assets/playerInitial";
 import playerCanMove from "../../services/playerCanMove";
 import { IGame } from "../../types/game.type";
@@ -37,6 +37,15 @@ export const gameSlice = createSlice({
     },
     debugModTurnOff(state) {
       state.gameState.debugMode = false;
+    },
+    updateMap(
+      state,
+      action: PayloadAction<{ x: number; y: number; value: mapObject }>
+    ) {
+      const { x, y, value } = action.payload;
+      if (state.maps[state.gameState.selectedLevel - 1]) {
+        state.maps[state.gameState.selectedLevel - 1][y][x] = value;
+      }
     },
     addMap(state, action: PayloadAction<ConvertMapType>) {
       state.maps.unshift(action.payload);
@@ -140,6 +149,7 @@ export const {
   prevLevel,
   debugModTurnOn,
   debugModTurnOff,
+  updateMap,
   addMap,
   appearPlayer,
   kickPlayer,
