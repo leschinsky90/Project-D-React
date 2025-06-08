@@ -12,6 +12,7 @@ import {
   prevLevel,
 } from "../../store/slices/game.slice";
 import { useBullets } from "../../hooks/useBullets";
+import { useEnemySpawner } from "../../store/hooks/useEnemySpawner";
 
 export const GamePage = () => {
   const dispatch = useAppDispatch();
@@ -26,6 +27,7 @@ export const GamePage = () => {
   );
 
   useBullets();
+  useEnemySpawner();
 
   const handleOnKeyDown = (event: KeyboardEvent) => {
     const k = event.code.toLowerCase();

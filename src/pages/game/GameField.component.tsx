@@ -15,6 +15,9 @@ interface IGameFieldComponentProps {
 export const GameFieldComponent = ({ map }: IGameFieldComponentProps) => {
   const playerParams = useAppSelector((state) => state.gameReducer.player);
   const { bullets } = useAppSelector((state) => state.gameReducer);
+  const enemies = useAppSelector(
+    (state) => state.gameReducer.enemies.levelEnemies
+  );
   return (
     <div className="gameField">
       {map.map((row) =>
@@ -24,6 +27,9 @@ export const GameFieldComponent = ({ map }: IGameFieldComponentProps) => {
       {playerParams.tank.alive ? <PlayerTankComponent /> : <></>}
       {bullets.map((item) => (
         <BulletComponent bullet={item} key={item.id} />
+      ))}
+      {enemies.map((enemy) => (
+        <EnemyComponent key={enemy.id} enemy={enemy} />
       ))}
     </div>
   );

@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import enemiesArray from "../../assets/levelAssets/enemiesArray";
 import mapsArray, {
   convertMapsArray,
 } from "../../assets/levelAssets/mapsArray";
@@ -16,7 +15,7 @@ const gameInitial: IGame = {
     debugMode: true,
   },
   player: playerInitial,
-  enemies: enemiesArray,
+  enemies: { levelEnemies: [], lastEnemySpawnTime: 0 },
   maps: convertMaps,
   bullets: [],
 };
@@ -28,9 +27,11 @@ export const gameSlice = createSlice({
     nextLevel(state) {
       if (state.gameState.selectedLevel < mapsArray.length)
         state.gameState.selectedLevel++;
+      else state.gameState.selectedLevel = 1;
     },
     prevLevel(state) {
       if (state.gameState.selectedLevel > 1) state.gameState.selectedLevel--;
+      else state.gameState.selectedLevel = mapsArray.length - 1;
     },
     debugModTurnOn(state) {
       state.gameState.debugMode = true;
@@ -141,6 +142,35 @@ export const gameSlice = createSlice({
         bullet.y = action.payload.y;
       }
     },
+    /* spawnEnemy(state) {
+      const spawnPoints = [
+        { x: 0, y: 0 },
+        { x: 9, y: 0 },
+        { x: 16, y: 0 },
+      ];
+
+      const spawnPoint =
+        spawnPoints[Math.floor(Math.random() * spawnPoints.length)];
+
+      const isPositionFree = !state.enemies.levelEnemies.some(
+        (enemy) =>
+          enemy.tank.x === spawnPoint.x && enemy.tank.y === spawnPoint.y
+      );
+
+      if (isPositionFree) {
+        state.enemies.levelEnemies.push({
+          id: Math.random().substring(2, 9),
+          x: spawnPoint.x,
+          y: spawnPoint.y,
+          type: "basic", // Можно сделать случайный выбор типа
+          direction: "down",
+        });
+      }
+    }, */
+
+    updateSpawnTimer(state, action: PayloadAction<number>) {
+      state.enemies.lastEnemySpawnTime = action.payload;
+    },
   },
 });
 
@@ -160,5 +190,7 @@ export const {
   createPlayerBullet,
   bulletCollision,
   updateBulletPosition,
+  /* spawnEnemy, */
+  updateSpawnTimer,
 } = gameSlice.actions;
 export default gameSlice.reducer;

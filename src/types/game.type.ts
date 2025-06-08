@@ -1,5 +1,5 @@
 import { IBullet } from "./bullet.type";
-import { EnemiesArray } from "./enemies.type";
+import { IEnemy } from "./enemies.type";
 import { ConvertMapType } from "./map.type";
 import { IPlayer } from "./player.type";
 
@@ -9,7 +9,11 @@ export interface IGame {
     debugMode: boolean;
   };
   player: IPlayer;
-  enemies: EnemiesArray[];
+  enemies: {
+    levelEnemies: IEnemy[];
+    lastEnemySpawnTime: number;
+  };
+
   maps: ConvertMapType[];
   bullets: IBullet[];
 }
