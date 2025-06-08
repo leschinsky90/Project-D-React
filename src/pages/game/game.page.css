@@ -7,10 +7,20 @@
   align-items: center;
   cursor: default;
 }
-
+.levelSelectedDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .levelSelectedTitle {
   color: black;
   font-weight: 700;
+}
+.playLevelButton {
+  position: relative;
+  top: 20px;
+  font-size: 1rem;
+  height: 30px;
 }
 .gameField {
   width: 512px;

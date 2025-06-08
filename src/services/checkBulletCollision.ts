@@ -35,22 +35,12 @@ const checkBulletCollision = (
     4: map[Math.trunc(potentPosition.y)][Math.trunc(potentPosition.x)],
   };
 
-  if (
-    !(
-      ![1, 2].includes(mapObjectInPotentPosition[1]) &&
-      ![1, 2].includes(mapObjectInPotentPosition[2]) &&
-      ![1, 2].includes(mapObjectInPotentPosition[3]) &&
-      ![1, 2].includes(mapObjectInPotentPosition[4])
-    )
-  ) {
-    console.log(
-      5,
-      potentPosition,
-      map[Math.trunc(potentPosition.y)][Math.trunc(potentPosition.x)]
-    );
-    return true;
-  }
-  return false;
+  return (
+    [1, 2].includes(mapObjectInPotentPosition[1]) ||
+    [1, 2].includes(mapObjectInPotentPosition[2]) ||
+    [1, 2].includes(mapObjectInPotentPosition[3]) ||
+    [1, 2].includes(mapObjectInPotentPosition[4])
+  );
 };
 
 export default checkBulletCollision;

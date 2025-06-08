@@ -50,10 +50,10 @@ export const GamePage = () => {
         dispatch(createPlayerBullet());
       }
     } else {
-      if (k == "enter") setLevelSelected(true);
-      if (k == "w" || k == "d" || k == "arrowup" || k == "arrowright")
+      if (k == "enter" || k == "space") setLevelSelected(true);
+      if (k == "keyw" || k == "keyd" || k == "arrowup" || k == "arrowright")
         dispatch(nextLevel());
-      if (k == "s" || k == "a" || k == "arrowdown" || k == "arrowleft")
+      if (k == "keys" || k == "keya" || k == "arrowdown" || k == "arrowleft")
         dispatch(prevLevel());
     }
   };
@@ -92,7 +92,15 @@ export const GamePage = () => {
           <InfoPanelComponent />
         </>
       ) : (
-        <h1 className="levelSelectedTitle">STAGE: {selectedLevel}</h1>
+        <div className="levelSelectedDiv">
+          <h1 className="levelSelectedTitle">STAGE: {selectedLevel}</h1>
+          <button
+            className="playLevelButton"
+            onClick={() => setLevelSelected(true)}
+          >
+            Play level
+          </button>
+        </div>
       )}
     </div>
   );
