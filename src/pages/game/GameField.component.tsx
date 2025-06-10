@@ -7,6 +7,8 @@ import {
 } from "../../components/mapObjects";
 import { HeadquatersContainerComponent } from "../../components/mapObjects";
 import { PlayerTankComponent } from "../../components/mapObjects";
+import { EnemyComponent } from "../../components/mapObjects/tanks/Enemy.component";
+import { useMemo } from "react";
 
 interface IGameFieldComponentProps {
   map: ConvertMapType;
@@ -18,13 +20,22 @@ export const GameFieldComponent = ({ map }: IGameFieldComponentProps) => {
   const enemies = useAppSelector(
     (state) => state.gameReducer.enemies.levelEnemies
   );
+
+  const mapObjects = useMemo(
+    () =>
+      map.flatMap((row, rowIndex) =>
+        row.map((item, colIndex) => (
+          <MapObjectComponent type={item} key={`${rowIndex}-${colIndex}`} />
+        ))
+      ),
+    [map]
+  );
+
   return (
     <div className="gameField">
-      {map.map((row) =>
-        row.map((item, index) => <MapObjectComponent type={item} key={index} />)
-      )}
+      {mapObjects}
       <HeadquatersContainerComponent />
-      {playerParams.tank.alive ? <PlayerTankComponent /> : <></>}
+      {playerParams.tank.alive && <PlayerTankComponent />}
       {bullets.map((item) => (
         <BulletComponent bullet={item} key={item.id} />
       ))}

@@ -9,46 +9,38 @@ const checkBulletCollision = (
   dispatch: ThunkDispatch<{ gameReducer: IGame }, undefined, UnknownAction> &
     Dispatch<UnknownAction>
 ): boolean => {
-  const { direction, x, y, speed } = bullet;
-  const directions = {
+  const { direction, x, y, speed, lvl } = bullet;
+  const dir = {
     up: { x: 0, y: -speed },
     down: { x: 0, y: speed },
     left: { x: -speed, y: 0 },
     right: { x: speed, y: 0 },
-  };
+  }[direction];
 
-  const dir = directions[direction];
-  const potentPosition = {
-    x: x + dir.x,
-    y: y + dir.y,
-  };
+  const potentX = Math.trunc(x + dir.x);
+  const potentY = Math.trunc(y + dir.y);
+
+  if (potentX < 0 || potentX > 31 || potentY < 0 || potentY > 31) return true;
+
+  const mapObjectInPotentPosition = map[potentY][potentX];
 
   if (
-    potentPosition.x > 32 ||
-    potentPosition.x < 0 ||
-    potentPosition.y < 0 ||
-    potentPosition.y > 32
+    mapObjectInPotentPosition === 1 ||
+    (mapObjectInPotentPosition === 2 && lvl === 3)
   ) {
+    setTimeout(() => {
+      dispatch(
+        updateMap({
+          x: potentX,
+          y: potentY,
+          value: 0,
+        })
+      );
+    }, 0);
     return true;
   }
 
-  const mapObjectInPotentPosition =
-    map[Math.trunc(potentPosition.y)][Math.trunc(potentPosition.x)];
-
-  if (mapObjectInPotentPosition === 1) {
-    dispatch(
-      updateMap({
-        x: Math.trunc(potentPosition.x),
-        y: Math.trunc(potentPosition.y),
-        value: 0,
-      })
-    );
-    return true;
-  }
-  if (mapObjectInPotentPosition === 2) {
-    return true;
-  }
-  return false;
+  return mapObjectInPotentPosition === 2;
 };
 
 export default checkBulletCollision;

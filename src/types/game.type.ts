@@ -12,6 +12,8 @@ export interface IGame {
   enemies: {
     levelEnemies: IEnemy[];
     lastEnemySpawnTime: number;
+    index: number;
+    nextSpawnPoint: number;
   };
 
   maps: ConvertMapType[];

@@ -6,6 +6,7 @@ import { ConvertMapType, Directions, IBullet, mapObject } from "../../types";
 import { playerInitial } from "../../assets/playerInitial";
 import playerCanMove from "../../services/playerCanMove";
 import { IGame } from "../../types/game.type";
+import { createEnemy } from "../../assets/enemiesInitial";
 
 const convertMaps = convertMapsArray();
 
@@ -15,7 +16,12 @@ const gameInitial: IGame = {
     debugMode: true,
   },
   player: playerInitial,
-  enemies: { levelEnemies: [], lastEnemySpawnTime: 0 },
+  enemies: {
+    levelEnemies: [],
+    lastEnemySpawnTime: 0,
+    nextSpawnPoint: 0,
+    index: 0,
+  },
   maps: convertMaps,
   bullets: [],
 };
@@ -44,9 +50,9 @@ export const gameSlice = createSlice({
       action: PayloadAction<{ x: number; y: number; value: mapObject }>
     ) {
       const { x, y, value } = action.payload;
-      if (state.maps[state.gameState.selectedLevel - 1]) {
-        state.maps[state.gameState.selectedLevel - 1][y][x] = value;
-      }
+      const map = state.maps[state.gameState.selectedLevel - 1];
+
+      if (map && map[y] && map[y][x] !== value) map[y][x] = value;
     },
     addMap(state, action: PayloadAction<ConvertMapType>) {
       state.maps.unshift(action.payload);
@@ -108,6 +114,7 @@ export const gameSlice = createSlice({
       const bullet: IBullet = {
         type: "player",
         speed: 1,
+        lvl: state.player.lvl,
         x: state.player.tank.x + 1,
         y: state.player.tank.y + 1,
         direction: state.player.tank.direction,
@@ -142,31 +149,42 @@ export const gameSlice = createSlice({
         bullet.y = action.payload.y;
       }
     },
-    /* spawnEnemy(state) {
+    spawnEnemy(state) {
+      const createEnemyId = () => {
+        let id = Math.trunc(Math.random() * 1000 + 1);
+        state.enemies.levelEnemies.forEach((item) => {
+          if (item.id === id) id = createEnemyId();
+        });
+        return id;
+      };
+
       const spawnPoints = [
         { x: 0, y: 0 },
-        { x: 9, y: 0 },
-        { x: 16, y: 0 },
+        { x: 7.5, y: 0 },
+        { x: 15, y: 0 },
       ];
 
-      const spawnPoint =
-        spawnPoints[Math.floor(Math.random() * spawnPoints.length)];
+      const spawnPoint = spawnPoints[state.enemies.nextSpawnPoint];
 
-      const isPositionFree = !state.enemies.levelEnemies.some(
-        (enemy) =>
-          enemy.tank.x === spawnPoint.x && enemy.tank.y === spawnPoint.y
-      );
+      if (state.enemies.nextSpawnPoint == 2) state.enemies.nextSpawnPoint = 0;
+      else state.enemies.nextSpawnPoint++;
+
+      const isPositionFree = !state.enemies.levelEnemies.some((enemy) => {
+        return enemy.tank?.x === spawnPoint.x && enemy.tank.y === spawnPoint.y;
+      });
 
       if (isPositionFree) {
-        state.enemies.levelEnemies.push({
-          id: Math.random().substring(2, 9),
-          x: spawnPoint.x,
-          y: spawnPoint.y,
-          type: "basic", // Можно сделать случайный выбор типа
-          direction: "down",
-        });
+        const id = createEnemyId();
+        const newEnemy = createEnemy(
+          id,
+          state.gameState.selectedLevel,
+          state.enemies.index,
+          spawnPoint
+        );
+
+        state.enemies.levelEnemies.push(newEnemy);
       }
-    }, */
+    },
 
     updateSpawnTimer(state, action: PayloadAction<number>) {
       state.enemies.lastEnemySpawnTime = action.payload;
@@ -190,7 +208,7 @@ export const {
   createPlayerBullet,
   bulletCollision,
   updateBulletPosition,
-  /* spawnEnemy, */
+  spawnEnemy,
   updateSpawnTimer,
 } = gameSlice.actions;
 export default gameSlice.reducer;

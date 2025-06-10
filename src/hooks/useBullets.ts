@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import {
   bulletCollision,
@@ -14,42 +14,29 @@ export const useBullets = () => {
     (state) =>
       state.gameReducer.maps[state.gameReducer.gameState.selectedLevel - 1]
   );
-  const lastUpdateRef = useRef(0);
 
   useEffect(() => {
-    let animationFrameId: number;
+    const intervalId = setInterval(() => {
+      bullets.forEach((bullet) => {
+        const { id, direction, speed, x, y } = bullet;
 
-    const moveBullets = (timestamp: number) => {
-      if (timestamp - lastUpdateRef.current > 60) {
-        bullets.forEach((bullet) => {
-          const { id, direction, speed, x, y } = bullet;
+        const newX =
+          direction === "left"
+            ? x - speed
+            : direction === "right"
+            ? x + speed
+            : x;
+        const newY =
+          direction === "up" ? y - speed : direction === "down" ? y + speed : y;
 
-          const directions = {
-            up: { x: x, y: y - speed },
-            down: { x: x, y: y + speed },
-            left: { x: x - speed, y: y },
-            right: { x: x + speed, y: y },
-          };
+        if (checkBulletCollision(currentMap, bullet, dispatch)) {
+          dispatch(bulletCollision(id));
+        } else {
+          dispatch(updateBulletPosition({ id, x: newX, y: newY }));
+        }
+      });
+    }, 50);
 
-          const newX = directions[direction].x;
-          const newY = directions[direction].y;
-
-          if (checkBulletCollision(currentMap, bullet, dispatch)) {
-            dispatch(bulletCollision(id));
-          } else {
-            dispatch(updateBulletPosition({ id, x: newX, y: newY }));
-          }
-        });
-        lastUpdateRef.current = timestamp;
-      }
-
-      animationFrameId = requestAnimationFrame(moveBullets);
-    };
-
-    animationFrameId = requestAnimationFrame(moveBullets);
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, [bullets, dispatch]);
+    return () => clearInterval(intervalId);
+  }, [bullets, currentMap]);
 };

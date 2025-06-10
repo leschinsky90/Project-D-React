@@ -29,21 +29,26 @@ const playerCanMove = (
     return false;
   }
 
-  const mapObjectInPotentPosition = {
-    1: map[Math.trunc(potentPosition.y)][Math.trunc(potentPosition.x)],
-    2: map[Math.trunc(potentPosition.y)][Math.trunc(potentPosition.x + 1.5)],
-    3: map[Math.trunc(potentPosition.y + 1.5)][
-      Math.trunc(potentPosition.x + 1.5)
-    ],
-    4: map[Math.trunc(potentPosition.y + 1.5)][Math.trunc(potentPosition.x)],
-  };
+  const checkPoints = [
+    [0, 0],
+    [0.75, 0],
+    [1.5, 0],
+    [0, 0.75],
+    [1.5, 0.75],
+    [0, 1.5],
+    [0.75, 1.5],
+    [1.5, 1.5],
+  ];
 
-  return (
-    ![1, 2, 3].includes(mapObjectInPotentPosition[1]) &&
-    ![1, 2, 3].includes(mapObjectInPotentPosition[2]) &&
-    ![1, 2, 3].includes(mapObjectInPotentPosition[3]) &&
-    ![1, 2, 3].includes(mapObjectInPotentPosition[4])
-  );
+  for (const [dx, dy] of checkPoints) {
+    const mapObject =
+      map[Math.trunc(potentPosition.y + dy)][Math.trunc(potentPosition.x + dx)];
+    if ([1, 2, 3].includes(mapObject)) {
+      return false;
+    }
+  }
+
+  return true;
 };
 
 export default playerCanMove;

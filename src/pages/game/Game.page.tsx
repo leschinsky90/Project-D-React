@@ -12,7 +12,7 @@ import {
   prevLevel,
 } from "../../store/slices/game.slice";
 import { useBullets } from "../../hooks/useBullets";
-import { useEnemySpawner } from "../../store/hooks/useEnemySpawner";
+import { useEnemySpawner } from "../../hooks/useEnemiesSpawner";
 
 export const GamePage = () => {
   const dispatch = useAppDispatch();
