@@ -1,20 +1,20 @@
-import { ConvertMapType, IPlayer } from "../types";
+import { ConvertMapType, IEnemy, IPlayer } from "../types";
 
 type Move = "up" | "down" | "left" | "right";
 
 const playerCanMove = (
   map: ConvertMapType,
+  enemies: IEnemy[],
   playerParams: IPlayer,
   vector: Move
 ) => {
-  const directions = {
+  const dir = {
     up: { x: 0, y: -1 },
     down: { x: 0, y: 1 },
     left: { x: -1, y: 0 },
     right: { x: 1, y: 0 },
-  };
+  }[vector];
 
-  const dir = directions[vector];
   const potentPosition = {
     x: playerParams.tank.x + dir.x / 2,
     y: playerParams.tank.y + dir.y / 2,
@@ -48,6 +48,15 @@ const playerCanMove = (
     }
   }
 
+  for (const enemy of enemies) {
+    if (!enemy.tank) return true;
+    const distanceX = Math.abs(enemy.tank.x - potentPosition.x);
+    const distanceY = Math.abs(enemy.tank.y - potentPosition.y);
+    if (distanceX < 2 && distanceY < 2) {
+      console.log(enemy.tank.x, enemy.tank.y);
+      return false;
+    }
+  }
   return true;
 };
 

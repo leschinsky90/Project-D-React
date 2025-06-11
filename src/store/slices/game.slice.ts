@@ -74,6 +74,7 @@ export const gameSlice = createSlice({
       const direction = state.player.tank.direction;
       const isCanMove = playerCanMove(
         state.maps[state.gameState.selectedLevel - 1],
+        state.enemies.levelEnemies,
         state.player,
         direction
       );
@@ -160,8 +161,8 @@ export const gameSlice = createSlice({
 
       const spawnPoints = [
         { x: 0, y: 0 },
-        { x: 7.5, y: 0 },
         { x: 15, y: 0 },
+        { x: 30, y: 0 },
       ];
 
       const spawnPoint = spawnPoints[state.enemies.nextSpawnPoint];
