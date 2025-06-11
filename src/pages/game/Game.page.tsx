@@ -82,9 +82,15 @@ export const GamePage = () => {
   return (
     <div
       className="gamePageDiv"
-      onClick={(e) => handleMouseInteraction(e, () => dispatch(nextLevel()))}
-      onContextMenu={(e) =>
-        handleMouseInteraction(e, () => dispatch(prevLevel()))
+      onClick={(event) =>
+        handleMouseInteraction(event, () => {
+          if (!levelSelected) dispatch(nextLevel());
+        })
+      }
+      onContextMenu={(event) =>
+        handleMouseInteraction(event, () => {
+          if (!levelSelected) dispatch(prevLevel());
+        })
       }
     >
       {levelSelected ? (

@@ -10,6 +10,9 @@ import { ConvertMapType } from "../types";
 export const useBullets = () => {
   const dispatch = useAppDispatch();
   const bullets = useAppSelector((state) => state.gameReducer.bullets);
+  const enemies = useAppSelector(
+    (state) => state.gameReducer.enemies.levelEnemies
+  );
   const currentMap: ConvertMapType = useAppSelector(
     (state) =>
       state.gameReducer.maps[state.gameReducer.gameState.selectedLevel - 1]
@@ -29,7 +32,7 @@ export const useBullets = () => {
         const newY =
           direction === "up" ? y - speed : direction === "down" ? y + speed : y;
 
-        if (checkBulletCollision(currentMap, bullet, dispatch)) {
+        if (checkBulletCollision(currentMap, enemies, bullet, dispatch)) {
           dispatch(bulletCollision(id));
         } else {
           dispatch(updateBulletPosition({ id, x: newX, y: newY }));

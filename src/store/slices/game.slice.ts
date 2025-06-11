@@ -2,7 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import mapsArray, {
   convertMapsArray,
 } from "../../assets/levelAssets/mapsArray";
-import { ConvertMapType, Directions, IBullet, mapObject } from "../../types";
+import {
+  ConvertMapType,
+  Directions,
+  IBullet,
+  IEnemy,
+  mapObject,
+} from "../../types";
 import { playerInitial } from "../../assets/playerInitial";
 import playerCanMove from "../../services/playerCanMove";
 import { IGame } from "../../types/game.type";
@@ -186,9 +192,18 @@ export const gameSlice = createSlice({
         state.enemies.levelEnemies.push(newEnemy);
       }
     },
-
     updateSpawnTimer(state, action: PayloadAction<number>) {
       state.enemies.lastEnemySpawnTime = action.payload;
+    },
+    hitEnemy(state, action: PayloadAction<IEnemy>) {
+      /* const enemy = action.payload;
+      enemy.hp--;
+      if (enemy.tank?.alive && enemy.hp < 1) {
+        enemy.tank?.alive = false;
+        state.enemies.levelEnemies.filter(
+          (filteredEnemy) => filteredEnemy.id !== enemy.id
+        );
+      } */
     },
   },
 });
@@ -211,5 +226,6 @@ export const {
   updateBulletPosition,
   spawnEnemy,
   updateSpawnTimer,
+  hitEnemy,
 } = gameSlice.actions;
 export default gameSlice.reducer;
