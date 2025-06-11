@@ -9,15 +9,19 @@ export const useEnemySpawner = () => {
   );
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const spawnEnemyIfNeeded = () => {
       const now = Date.now();
 
       if (now - lastEnemySpawnTime > 7000 && levelEnemies.length < 3) {
         dispatch(spawnEnemy());
         dispatch(updateSpawnTimer(now));
       }
-    }, 3000);
 
-    return () => clearInterval(interval);
+      setTimeout(spawnEnemyIfNeeded, 3000);
+    };
+
+    const timeout = setTimeout(spawnEnemyIfNeeded, 3000);
+
+    return () => clearTimeout(timeout);
   }, [lastEnemySpawnTime, levelEnemies.length, dispatch]);
 };

@@ -1,39 +1,36 @@
-import { useEffect, useState } from "react";
-import { ConstructorChoiceComponent } from "./Constructor.choice.component";
+import { useCallback, useEffect, useState } from "react";
 import { CursorMenuComponent } from "./Cursor.menu.component";
 import "./menu.css";
-import { PlayChoiceComponent } from "./Play.choice.component";
 import { useNavigate } from "react-router";
+import { ChoiceComponent } from "./Choice.component";
 
 export const MenuPage = () => {
   const navigate = useNavigate();
-  const [cursorState, setCursorState] = useState<number>(1);
-  const handleOnKeyDown = (event: KeyboardEvent) => {
-    const k = event.code.toLocaleLowerCase();
-    if (k == "arrowdown" || k == "keys") {
-      setCursorState((cursorState % 2) + 1);
-    }
-    if (k == "arrowup" || k == "w") {
-      if (cursorState == 1) setCursorState(2);
-      else if (cursorState == 2) setCursorState(1);
-    } else if (k == "enter" || k == "space") {
-      if (cursorState == 1) navigate("/game");
-      else if (cursorState == 2) navigate("/constructor");
-    }
-  };
+  const [cursorState, setCursorState] = useState(1);
+
+  const handleOnKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      const k = event.code.toLowerCase();
+
+      if (["arrowdown", "keys"].includes(k) || ["arrowup", "w"].includes(k))
+        setCursorState((prev) => (prev === 1 ? 2 : 1));
+      else if (["enter", "space"].includes(k))
+        navigate(cursorState === 1 ? "/game" : "/constructor");
+    },
+    [cursorState, navigate]
+  );
+
   useEffect(() => {
     window.addEventListener("keydown", handleOnKeyDown);
-    return () => {
-      window.removeEventListener("keydown", handleOnKeyDown);
-    };
-  });
+    return () => window.removeEventListener("keydown", handleOnKeyDown);
+  }, [handleOnKeyDown]);
   return (
     <div className="menu">
       <div className="title"></div>
       <div className="choiceContainer">
         <CursorMenuComponent cursorState={cursorState} />
-        <PlayChoiceComponent />
-        <ConstructorChoiceComponent />
+        <ChoiceComponent label="PLAY" path="/game" />
+        <ChoiceComponent label="CONSTRUCTOR" path="/constructor" />
       </div>
     </div>
   );

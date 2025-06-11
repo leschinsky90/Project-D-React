@@ -4,7 +4,6 @@ interface ICursorMenuComponentProps {
 
 export const CursorMenuComponent = ({
   cursorState,
-}: ICursorMenuComponentProps) => {
-  const className = `tankCursor${cursorState}`;
-  return <div className={className}></div>;
-};
+}: ICursorMenuComponentProps) => (
+  <div className={`tankCursor${cursorState}`}></div>
+);

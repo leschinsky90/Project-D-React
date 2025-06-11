@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { GameFieldComponent } from "./GameField.component";
 import { InfoPanelComponent } from "./infoPanel";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import "./game.page.css";
-import { IMovementDirections } from "../../types";
+import { Directions } from "../../types";
 import {
   createPlayerBullet,
   nextLevel,
@@ -29,10 +29,18 @@ export const GamePage = () => {
   useBullets();
   useEnemySpawner();
 
-  const handleOnKeyDown = (event: KeyboardEvent) => {
-    const k = event.code.toLowerCase();
-    if (levelSelected) {
-      const movementDirections: IMovementDirections = {
+  const handleOnKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      const k = event.code.toLowerCase();
+      if (!levelSelected) {
+        if (["enter", "space"].includes(k)) setLevelSelected(true);
+        if (["keyw", "keyd", "arrowup", "arrowright"].includes(k))
+          dispatch(nextLevel());
+        if (["keys", "keya", "arrowdown", "arrowleft"].includes(k))
+          dispatch(prevLevel());
+        return;
+      }
+      const dirs: Record<string, Directions> = {
         keyw: "up",
         arrowup: "up",
         keys: "down",
@@ -42,51 +50,42 @@ export const GamePage = () => {
         keyd: "right",
         arrowright: "right",
       };
-      const dir = movementDirections[k];
+      const dir: Directions = dirs[k];
+
       if (dir) {
-        if (playerTankDirection == dir) {
-          dispatch(playerMove());
-        } else dispatch(playerTurn(dir));
+        dispatch(playerTurn(dir));
+        dispatch(playerMove());
       }
-      if (k == "space") {
+      if (k === "space") {
         dispatch(createPlayerBullet());
       }
-    } else {
-      if (k == "enter" || k == "space") setLevelSelected(true);
-      if (k == "keyw" || k == "keyd" || k == "arrowup" || k == "arrowright")
-        dispatch(nextLevel());
-      if (k == "keys" || k == "keya" || k == "arrowdown" || k == "arrowleft")
-        dispatch(prevLevel());
-    }
-  };
-  const handleOnMouseClick = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    event.preventDefault();
-    if (!levelSelected) {
-      dispatch(nextLevel());
-    }
-  };
-  const handleOnContextMenu = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    event.preventDefault();
-    if (!levelSelected) {
-      dispatch(prevLevel());
-    }
-  };
+    },
+    [levelSelected, playerTankDirection, dispatch]
+  );
+
+  const handleMouseInteraction = useCallback(
+    (
+      event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+      action: () => void
+    ) => {
+      event.preventDefault();
+      action();
+    },
+    [levelSelected]
+  );
+
   useEffect(() => {
     window.addEventListener("keydown", handleOnKeyDown);
-    return () => {
-      window.removeEventListener("keydown", handleOnKeyDown);
-    };
-  });
+    return () => window.removeEventListener("keydown", handleOnKeyDown);
+  }, [handleOnKeyDown]);
 
   return (
     <div
       className="gamePageDiv"
-      onClick={handleOnMouseClick}
-      onContextMenu={handleOnContextMenu}
+      onClick={(e) => handleMouseInteraction(e, () => dispatch(nextLevel()))}
+      onContextMenu={(e) =>
+        handleMouseInteraction(e, () => dispatch(prevLevel()))
+      }
     >
       {levelSelected ? (
         <>

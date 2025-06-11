@@ -5,33 +5,24 @@ export const LevelChangeButtonsComponent = () => {
   const debugMode = useAppSelector(
     (state) => state.gameReducer.gameState.debugMode
   );
+  if (!debugMode) return null;
+
   const dispatch = useAppDispatch();
-  const handleOnPreviosLevelButtonClick = () => {
-    dispatch(prevLevel());
-  };
-  const handleOnNextLevelButtonClick = () => {
-    dispatch(nextLevel());
-  };
+
   return (
-    <>
-      {debugMode ? (
-        <>
-          <button
-            className="levelChangeButton"
-            onClick={handleOnPreviosLevelButtonClick}
-          >
-            Prev level
-          </button>
-          <button
-            className="levelChangeButton"
-            onClick={handleOnNextLevelButtonClick}
-          >
-            Next level
-          </button>
-        </>
-      ) : (
-        <></>
-      )}
-    </>
+    <div className="levelChangeButtons">
+      <button
+        className="levelChangeButton"
+        onClick={() => dispatch(prevLevel())}
+      >
+        Prev level
+      </button>
+      <button
+        className="levelChangeButton"
+        onClick={() => dispatch(nextLevel())}
+      >
+        Next level
+      </button>
+    </div>
   );
 };

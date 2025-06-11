@@ -4,6 +4,6 @@ export * from "./Concrete.component";
 export * from "./Headquaters.component";
 export * from "./HeadquatersContainer.component";
 export * from "./Ice.component";
-export * from "./MapObjectContainer.component";
+export * from "./MapObject.component";
 export * from "./Water.component";
 export * from "./tanks";
