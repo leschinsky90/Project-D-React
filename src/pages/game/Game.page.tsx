@@ -13,6 +13,7 @@ import {
 } from "../../store/slices/game.slice";
 import { useBullets } from "../../hooks/useBullets";
 import { useEnemySpawner } from "../../hooks/useEnemiesSpawner";
+import { useEnemyMove } from "../../hooks/useEnemyMove";
 
 export const GamePage = () => {
   const dispatch = useAppDispatch();
@@ -30,6 +31,7 @@ export const GamePage = () => {
 
   useBullets();
   useEnemySpawner();
+  useEnemyMove();
 
   const handleOnKeyDown = useCallback(
     (event: KeyboardEvent) => {

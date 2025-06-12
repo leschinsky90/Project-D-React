@@ -151,7 +151,7 @@ export const gameSlice = createSlice({
       }
     },
     spawnEnemy(state) {
-      if(state.enemies.index>19) return
+      if (state.enemies.index > 19) return;
       const createEnemyId = () => {
         let id = Math.trunc(Math.random() * 1000 + 1);
         state.enemies.levelEnemies.forEach((item) => {
@@ -205,6 +205,18 @@ export const gameSlice = createSlice({
         );
       }
     },
+    updateEnemyPosition(
+      state,
+      action: PayloadAction<{ id: number | undefined; x: number; y: number }>
+    ) {
+      const { id, x, y } = action.payload;
+      if (!id) return;
+      const enemy = state.enemies.levelEnemies.find((e) => e.id === id);
+      if (enemy?.tank) {
+        enemy.tank.x = x;
+        enemy.tank.y = y;
+      }
+    },
   },
 });
 
@@ -227,5 +239,6 @@ export const {
   spawnEnemy,
   updateSpawnTimer,
   hitEnemy,
+  updateEnemyPosition,
 } = gameSlice.actions;
 export default gameSlice.reducer;

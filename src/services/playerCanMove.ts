@@ -25,9 +25,8 @@ const playerCanMove = (
     potentPosition.x < 0 ||
     potentPosition.y < 0 ||
     potentPosition.y > 30
-  ) {
+  )
     return false;
-  }
 
   const checkPoints = [
     [0, 0],
