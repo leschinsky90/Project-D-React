@@ -17,6 +17,8 @@ import { useEnemySpawner } from "../../hooks/useEnemiesSpawner";
 export const GamePage = () => {
   const dispatch = useAppDispatch();
   const [levelSelected, setLevelSelected] = useState<boolean>(false);
+  const [isGameFieldVisible, setIsGameFieldVisible] = useState(false);
+  const [isPanelVisible, setIsPanelVisible] = useState(false);
 
   const { selectedLevel } = useAppSelector(
     (state) => state.gameReducer.gameState
@@ -79,6 +81,15 @@ export const GamePage = () => {
     return () => window.removeEventListener("keydown", handleOnKeyDown);
   }, [handleOnKeyDown]);
 
+  useEffect(() => {
+    if (levelSelected) {
+      setIsGameFieldVisible(true);
+      setTimeout(() => {
+        setIsPanelVisible(true);
+      }, 1000);
+    }
+  }, [levelSelected]);
+
   return (
     <div
       className="gamePageDiv"
@@ -94,10 +105,20 @@ export const GamePage = () => {
       }
     >
       {levelSelected ? (
-        <>
-          <GameFieldComponent map={mapArr[selectedLevel - 1]} />
-          <InfoPanelComponent />
-        </>
+        <div className="gameWrapper">
+          <div
+            className={`gameFieldAnimated ${
+              isGameFieldVisible ? "visible" : ""
+            }`}
+          >
+            <GameFieldComponent map={mapArr[selectedLevel - 1]} />
+          </div>
+          <div
+            className={`infoPanelAnimated ${isPanelVisible ? "visible" : ""}`}
+          >
+            <InfoPanelComponent />
+          </div>
+        </div>
       ) : (
         <div className="levelSelectedDiv">
           <h1 className="levelSelectedTitle">STAGE: {selectedLevel}</h1>

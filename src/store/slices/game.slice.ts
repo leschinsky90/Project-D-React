@@ -151,6 +151,7 @@ export const gameSlice = createSlice({
       }
     },
     spawnEnemy(state) {
+      if(state.enemies.index>19) return
       const createEnemyId = () => {
         let id = Math.trunc(Math.random() * 1000 + 1);
         state.enemies.levelEnemies.forEach((item) => {

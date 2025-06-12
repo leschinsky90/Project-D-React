@@ -60,7 +60,6 @@ const checkBulletCollision = (
   });
 
   if (hittedEnemy) {
-    console.log(1);
     setTimeout(() => {
       dispatch(hitEnemy(hittedEnemy.id));
     }, 0);
