@@ -103,9 +103,9 @@ export const GamePage = () => {
           <h1 className="levelSelectedTitle">STAGE: {selectedLevel}</h1>
           <button
             className="playLevelButton"
-            onClick={() => {
+            onClick={(event) => {
+              event.stopPropagation();
               setLevelSelected(true);
-              dispatch(prevLevel());
             }}
           >
             Play level

@@ -60,15 +60,14 @@ const checkBulletCollision = (
   });
 
   if (hittedEnemy) {
-    console.log(hittedEnemy);
+    console.log(1);
     setTimeout(() => {
-      dispatch(hitEnemy(hittedEnemy));
+      dispatch(hitEnemy(hittedEnemy.id));
     }, 0);
     return true;
   }
 
   if (mapObjects.some(shouldDestroy)) {
-    console.log(potentX, potentY, extraX, extraY);
     setTimeout(() => {
       mapObjects.forEach((obj, index) => {
         if (shouldDestroy(obj)) {

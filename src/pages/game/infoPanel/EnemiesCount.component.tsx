@@ -1,11 +1,13 @@
-import enemiesArray from "../../../assets/levelAssets/enemiesArray";
+import { useAppSelector } from "../../../store/hooks";
+import "./infoPanel.css";
 
 export const EnemiesCountComponent = () => {
+  const enemyIndex = useAppSelector((state) => state.gameReducer.enemies.index);
   return (
     <div className="enemiesCountComponent">
-      {enemiesArray[0].map((_, index) => {
-        return <div className="enemyIcon" key={index} />;
-      })}
+      {Array.from({ length: 20 - enemyIndex }, (_, i) => (
+        <div className="enemyIcon" key={i} />
+      ))}
     </div>
   );
 };

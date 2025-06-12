@@ -53,7 +53,6 @@ const playerCanMove = (
     const distanceX = Math.abs(enemy.tank.x - potentPosition.x);
     const distanceY = Math.abs(enemy.tank.y - potentPosition.y);
     if (distanceX < 2 && distanceY < 2) {
-      console.log(enemy.tank.x, enemy.tank.y);
       return false;
     }
   }

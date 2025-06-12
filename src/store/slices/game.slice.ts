@@ -2,13 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import mapsArray, {
   convertMapsArray,
 } from "../../assets/levelAssets/mapsArray";
-import {
-  ConvertMapType,
-  Directions,
-  IBullet,
-  IEnemy,
-  mapObject,
-} from "../../types";
+import { ConvertMapType, Directions, IBullet, mapObject } from "../../types";
 import { playerInitial } from "../../assets/playerInitial";
 import playerCanMove from "../../services/playerCanMove";
 import { IGame } from "../../types/game.type";
@@ -165,13 +159,11 @@ export const gameSlice = createSlice({
         return id;
       };
 
-      const spawnPoints = [
+      const spawnPoint = [
         { x: 0, y: 0 },
         { x: 15, y: 0 },
         { x: 30, y: 0 },
-      ];
-
-      const spawnPoint = spawnPoints[state.enemies.nextSpawnPoint];
+      ][state.enemies.nextSpawnPoint];
 
       if (state.enemies.nextSpawnPoint == 2) state.enemies.nextSpawnPoint = 0;
       else state.enemies.nextSpawnPoint++;
@@ -188,22 +180,29 @@ export const gameSlice = createSlice({
           state.enemies.index,
           spawnPoint
         );
-
         state.enemies.levelEnemies.push(newEnemy);
+        state.enemies.index++;
       }
     },
     updateSpawnTimer(state, action: PayloadAction<number>) {
       state.enemies.lastEnemySpawnTime = action.payload;
     },
-    hitEnemy(state, action: PayloadAction<IEnemy>) {
-      /* const enemy = action.payload;
+    hitEnemy(state, action: PayloadAction<number | undefined>) {
+      const id = action.payload;
+
+      if (!id) return;
+
+      const enemy = state.enemies.levelEnemies.find((enemy) => enemy.id === id);
+
+      if (!enemy || !enemy.tank) return;
       enemy.hp--;
-      if (enemy.tank?.alive && enemy.hp < 1) {
-        enemy.tank?.alive = false;
-        state.enemies.levelEnemies.filter(
-          (filteredEnemy) => filteredEnemy.id !== enemy.id
+
+      if (enemy.tank && enemy.hp < 1) {
+        enemy.tank.alive = false;
+        state.enemies.levelEnemies = state.enemies.levelEnemies.filter(
+          (filteredEnemy) => filteredEnemy.id !== id
         );
-      } */
+      }
     },
   },
 });

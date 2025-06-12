@@ -4,12 +4,13 @@ import { spawnEnemy, updateSpawnTimer } from "../store/slices/game.slice";
 
 export const useEnemySpawner = () => {
   const dispatch = useAppDispatch();
-  const { lastEnemySpawnTime, levelEnemies } = useAppSelector(
+  const { lastEnemySpawnTime, levelEnemies, index } = useAppSelector(
     (state) => state.gameReducer.enemies
   );
 
   useEffect(() => {
     const spawnEnemyIfNeeded = () => {
+      if (index > 19) return;
       const now = Date.now();
 
       if (now - lastEnemySpawnTime > 7000 && levelEnemies.length < 3) {
