@@ -18,10 +18,7 @@ export const useEnemySpawner = () => {
     const spawnEnemyIfNeeded = () => {
       if (indexRef.current > 19) return;
       const now = Date.now();
-      if (
-        now - lastEnemySpawnTime > ENEMY_SPAWN_INTERVAL &&
-        levelEnemies.length < 3
-      ) {
+      if (now - lastEnemySpawnTime > ENEMY_SPAWN_INTERVAL) {
         dispatch(spawnEnemy());
         dispatch(updateSpawnTimer(now));
       }
